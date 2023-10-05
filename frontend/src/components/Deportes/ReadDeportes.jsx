@@ -1,8 +1,9 @@
 import axios from "axios";
-import ubicacion from "../assets/svg/logo.svg"
+import ubicacion from "../../assets/svg/logo.svg"
+import { Link } from "react-router-dom";
 import React, {useEffect,useState} from "react";
 
-export default function Read(){
+export default function ReadDeportes(){
     const [APIData,setAPIData] = useState([]);
 
     useEffect(()=>{
@@ -20,7 +21,7 @@ export default function Read(){
                 APIData.map((data)=>{
                     return(
                         <div className="card">
-      <div className="card-header"  style={{ backgroundImage: `url(https://media.traveler.es/photos/622a11b662d4f113d6eb070c/16:9/w_2560%2Cc_limit/raf.jpg)` }}>
+      <div className="card-header"  style={{ backgroundImage: `url(${data.img})` }}>
 
       </div>
 
@@ -45,10 +46,13 @@ export default function Read(){
                 <span className="label">Dificultad</span>
                 <span className="value">{data.dificultad}</span>
               </div>
-              <div className="stat">
-                <span className="label">Likes</span>
-                <span className="value">320</span>
-              </div>
+          </div>
+          <div className="reservacion">
+          <Link to="/Reservacion">
+                <button>
+                    <span>Reservar</span>
+                </button>
+            </Link>
           </div>
       </div>
   </div>
