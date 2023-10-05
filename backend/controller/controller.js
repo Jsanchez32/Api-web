@@ -15,7 +15,6 @@ const getData = async (req, res) => {
 
 const login = async(req,res)=>{
     try {
-        console.log(req.body);
         const db = await conection();
         const coleccion = db.collection('Usuarios');
         const validateLogin = await coleccion.findOne({ $and: [{ correo: req.body.correo }, { password: req.body.password }] })
@@ -25,6 +24,17 @@ const login = async(req,res)=>{
         else {
             return res.status(404).send('Email o Password incorrecta')
         }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getUser = async(req,res)=>{
+    try {
+        const db = await conection();
+        const coleccion = db.collection('Usuarios');
+        const user = await coleccion.findOne({correo:req.body.correo});
+        res.send(user);
     } catch (error) {
         console.log(error);
     }
@@ -89,5 +99,6 @@ export {
     addData,
     updateData,
     deleteData,
-    login
+    login,
+    getUser
 }

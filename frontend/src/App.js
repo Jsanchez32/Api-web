@@ -1,6 +1,7 @@
 import ReadDeportes from './components/Deportes/ReadDeportes';
 import ReadHoteles from './components/Hoteles/ReadHotel';
 import Login from './components/Login/Login';
+import Register from './components/Login/Register';
 import NavBar from './components/Navbar';
 import "./assets/css/navbar.css";
 import "./assets/css/card.css"
@@ -20,6 +21,9 @@ function App() {
         </div>
         <div>
           <Route exact path = "/" component={Login}></Route>
+        </div>
+        <div>
+          <Route exact path = "/Register" component={Register}></Route>
         </div>
   </Router>
   );
