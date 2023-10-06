@@ -16,8 +16,8 @@ export default function NavBar(){
                 <Link to="/Perfil" className="navbar">
                     Perfil
                 </Link>
-                <Link to="/Perfil" className="navbar">
-                    Salir   
+                <Link to="/Salir" className="navbar">
+                    Salir
                 </Link>
             <hr/>
 	</nav>

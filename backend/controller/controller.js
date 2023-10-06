@@ -29,6 +29,17 @@ const login = async(req,res)=>{
     }
 }
 
+const getReservacionUser = async (req,res)=>{
+    try {
+        const db = await conection();
+        const coleccion = db.collection('Reservaciones');
+        const response = await coleccion.find({idUsuario:req.body.id}).toArray();
+        res.send(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const getUser = async(req,res)=>{
     try {
         const db = await conection();
@@ -100,5 +111,6 @@ export {
     updateData,
     deleteData,
     login,
-    getUser
+    getUser,
+    getReservacionUser
 }

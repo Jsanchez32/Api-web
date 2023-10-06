@@ -1,4 +1,4 @@
-import {addData,deleteData,getData,updateData,login,getUser} from "../controller/controller.js"
+import {addData,deleteData,getData,updateData,login,getUser,getReservacionUser} from "../controller/controller.js"
 import {Router} from "express";
 
 const router = Router();
@@ -9,6 +9,7 @@ router.delete('/:collectionName/del/:id',deleteData);
 router.put('/:collectionName/upd/:id',updateData);
 router.post('/login',login)
 router.post('/user',getUser)
+router.post('/reservacion',getReservacionUser)
 
 
 
