@@ -13,7 +13,7 @@ const getData = async (req, res) => {
     }
 }
 
-const login = async(req,res)=>{
+const login = async (req, res) => {
     try {
         const db = await conection();
         const coleccion = db.collection('Usuarios');
@@ -29,22 +29,108 @@ const login = async(req,res)=>{
     }
 }
 
-const getReservacionUser = async (req,res)=>{
+const getReservacionUser = async (req, res) => {
     try {
         const db = await conection();
         const coleccion = db.collection('Reservaciones');
-        const response = await coleccion.find({idUsuario:req.body.id}).toArray();
+        const response = await coleccion.aggregate([
+            {
+                $lookup: {
+                    from: "Instructores",
+                    localField: 'idInstructor',
+                    foreignField: 'id',
+                    as: 'guia'
+                }
+            },
+            {
+                $lookup: {
+                    from: "Deportes",
+                    localField: 'idDeporte',
+                    foreignField: 'id',
+                    as: 'deporte'
+                }
+            },
+            {
+                $unwind: '$deporte'
+            },
+            {
+                $unwind: '$guia'
+            },
+            {
+                $addFields: {
+                    nombreDeporte: '$deporte.nombreDeporte',
+                    nombreGuia: '$guia.nombre'
+                }
+            },
+            {
+                $project: {
+                    deporte: 0,
+                    guia: 0
+                }
+            },
+            {
+                $match: { idUsuario: req.body.id }
+            }
+        ]).toArray();
         res.send(response);
     } catch (error) {
         console.log(error);
     }
 }
 
-const getUser = async(req,res)=>{
+
+const getReservacionAdmin = async (req, res) => {
+    try {
+        const db = await conection();
+        const coleccion = db.collection('Reservaciones');
+        const response = await coleccion.aggregate([
+            {
+                $lookup: {
+                    from: "Instructores",
+                    localField: 'idInstructor',
+                    foreignField: 'id',
+                    as: 'guia'
+                }
+            },
+            {
+                $lookup: {
+                    from: "Deportes",
+                    localField: 'idDeporte',
+                    foreignField: 'id',
+                    as: 'deporte'
+                }
+            },
+            {
+                $unwind: '$deporte'
+            },
+            {
+                $unwind: '$guia'
+            },
+            {
+                $addFields: {
+                    nombreDeporte: '$deporte.nombreDeporte',
+                    nombreGuia: '$guia.nombre'
+                }
+            },
+            {
+                $project: {
+                    deporte: 0,
+                    guia: 0
+                }
+            }
+        ]).toArray();
+        res.send(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+const getUser = async (req, res) => {
     try {
         const db = await conection();
         const coleccion = db.collection('Usuarios');
-        const user = await coleccion.findOne({correo:req.body.correo});
+        const user = await coleccion.findOne({ correo: req.body.correo });
         res.send(user);
     } catch (error) {
         console.log(error);
@@ -56,7 +142,7 @@ const addData = async (req, res) => {
         const db = await conection();
         const { collectionName } = req.params
         const data = req.body;
-
+        console.log(data);
         const coleccion = db.collection(collectionName);
         if (collectionName == 'Usuarios') {
             const emailExist = await coleccion.findOne({ correo: req.body.correo });
@@ -112,5 +198,6 @@ export {
     deleteData,
     login,
     getUser,
-    getReservacionUser
+    getReservacionUser,
+    getReservacionAdmin
 }

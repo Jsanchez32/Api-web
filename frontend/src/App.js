@@ -8,6 +8,7 @@ import "./assets/css/navbar.css";
 import "./assets/css/card.css"
 import "./assets/css/form.css"
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import CreateReservation from './components/Reservacion/CreateReservacion';
 import Logout from './components/Perfil/Logout';
 
 
@@ -22,7 +23,10 @@ function App() {
           <Route exact path = "/Hoteles" component={ReadHoteles}></Route>
         </div>
         <div>
-          <Route exact path = "/" component={Login}></Route>
+          <Route exact path = "/Login" component={Login}></Route>
+        </div>
+        <div>
+          <Route exact path = "/Reservacion" component={CreateReservation}></Route>
         </div>
         <div>
           <Route exact path = "/Register" component={Register}></Route>

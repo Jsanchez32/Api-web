@@ -3,11 +3,23 @@
   flex-direction: column;
   gap: 10px;
   max-width: 350px;
-  background-color: #fff;
+  background-color: #dcdbdb;
   padding: 20px;
   border-radius: 20px;
   position: relative;
+  padding: 2rem;
+  justify-content: center;
+  margin-top: 5rem;
 }
+
+.enviar{
+  display: flex;
+  justify-content: center;
+}
+.enviar button{
+  width: 20rem;
+}
+
 
 .title {
   font-size: 28px;
@@ -67,6 +79,7 @@
 
 .form label {
   position: relative;
+  display: flex;
 }
 
 .form label .input, form select {
@@ -77,6 +90,11 @@
   border-radius: 10px;
 }
 
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .form label select {
   width: 100%;
   padding: 10px 10px 20px 10px;
