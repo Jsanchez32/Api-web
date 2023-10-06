@@ -8,7 +8,6 @@
   border-radius: 20px;
   position: relative;
   padding: 2rem;
-  justify-content: center;
   margin-top: 5rem;
 }
 
@@ -90,7 +89,7 @@
   border-radius: 10px;
 }
 
-.container{
+.containerForm{
   display: flex;
   justify-content: center;
   align-items: center;

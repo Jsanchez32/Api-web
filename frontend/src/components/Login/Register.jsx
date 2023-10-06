@@ -35,14 +35,36 @@ export default function Register(){
         }
     return(
         <div>
-            <form>
-                <input type="email" value={correo} onChange={(e)=>setCorreo(e.target.value)} />
-                <input type="text" value={username} onChange={(e)=>setUsername(e.target.value)} />
-                <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
-                <button type="submit" onClick={(e)=>{
-                    e.preventDefault()
-                    logearse()}}>Register</button>
-            </form>
+        <div class="container">
+            <div class="screen">
+                <div class="screen__content">
+                    <form class="login">
+                        <div class="login__field">
+                            <i class="login__icon fas fa-user"></i>
+                            <input type="email" class="login__input" value={correo} onChange={(e)=>setCorreo(e.target.value)} placeholder="Email"/>
+                        </div>
+                        <div class="login__field">
+                            <i class="login__icon fas fa-lock"></i>
+                            <input type="text" class="login__input" value={password} onChange={(e)=>setUsername(e.target.value)} placeholder="Username"/>
+                        </div>
+                        <div class="login__field">
+                            <i class="login__icon fas fa-lock"></i>
+                            <input type="password" class="login__input" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password"/>
+                        </div>
+                        <button class="button login__submit" type="submit" onClick={(e)=>{e.preventDefault();logearse()}}>
+                            <span class="button__text">Register Now</span>
+                            <i class="button__icon fas fa-chevron-right"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="screen__background">
+                    <span class="screen__background__shape screen__background__shape4"></span>
+                    <span class="screen__background__shape screen__background__shape3"></span>
+                    <span class="screen__background__shape screen__background__shape2"></span>
+                    <span class="screen__background__shape screen__background__shape1"></span>
+                </div>
+            </div>
         </div>
+    </div>
     )
 }

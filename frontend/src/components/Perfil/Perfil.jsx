@@ -1,15 +1,27 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import NavBar from "../Navbar";
 
 export default function Perfil() {
-
+    let history = useHistory();
     const deleteOne = (id)=>{
         axios.delete(`http://localhost:8000/api/Reservaciones/del/${id}`)
         .then((getData)=>{
             setAPIData(getData.data);
         });
     }
+
+    useEffect(()=>{
+        if(localStorage.getItem('id')){
+            history.push('/Perfil')
+        }
+        else{
+            history.push('/login')
+        }
+    },[])
+
     const [APIData, setAPIData] = useState([]);
     const rol = localStorage.getItem('rol');
     const id = parseInt(localStorage.getItem('id'))
@@ -28,6 +40,10 @@ export default function Perfil() {
     }
     return (
         <div>
+            <header>
+                <NavBar></NavBar>
+            </header>
+            <h1>Mis reservaciones</h1>
             <div className="container">
                 {
                     APIData.map((data) => {

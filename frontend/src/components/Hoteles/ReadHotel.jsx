@@ -1,20 +1,32 @@
 import axios from "axios";
 import ubicacion from "../../assets/svg/logo.svg"
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
+import NavBar from '../Navbar';
+
 
 export default function ReadHoteles() {
     const [APIData, setAPIData] = useState([]);
-
+    let history = useHistory();
     useEffect(() => {
         axios.get(`http://localhost:8000/api/Hoteles/get`)
             .then((response) => {
                 console.log(response.data);
                 setAPIData(response.data);
             })
+
+            if(localStorage.getItem('id')){
+                history.push('/Hoteles')
+            }
+            else{
+                history.push('/login')
+            }
+            
     }, [])
 
     return (
+        <div>
+            <header><NavBar></NavBar></header>
         <div className="container">
             {
                 APIData.map((data) => {
@@ -51,9 +63,11 @@ export default function ReadHoteles() {
                                 </div>
                             </div>
                         </div>
+                        
                     )
                 })
             }
+        </div>
         </div>
     )
 }

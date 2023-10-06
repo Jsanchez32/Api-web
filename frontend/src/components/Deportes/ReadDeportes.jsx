@@ -2,20 +2,32 @@ import axios from "axios";
 import ubicacion from "../../assets/svg/logo.svg"
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import NavBar from '../Navbar';
 
 export default function ReadDeportes() {
     const [APIData, setAPIData] = useState([]);
-
+    let history = useHistory();
     useEffect(() => {
         axios.get(`http://localhost:8000/api/Deportes/get`)
             .then((response) => {
                 console.log(response.data);
                 setAPIData(response.data);
+                if(localStorage.getItem('id')){
+                    history.push('/Deportes')
+                }
+                else{
+                    history.push('/login')
+                }
             })
+
     }, [])
 
     return (
         <div>
+            <header>
+                <NavBar></NavBar>
+            </header>
             <div className="container">
                 {
                     APIData.map((data) => {
