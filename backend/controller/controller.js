@@ -163,13 +163,15 @@ const updateData = async (req, res) => {
     try {
         const db = await conection();
         const { collectionName } = req.params
-        const id = parseInt(req.params.id)
+        const idP = parseInt(req.params.id)
 
         const data = req.body;
+        console.log(data);
+        console.log(idP);
 
         const coleccion = db.collection(collectionName);
-        const response = await coleccion.findOneAndUpdate({ id: id }, { $set: data });
-        res.send(response);
+        await coleccion.findOneAndUpdate({ id: idP }, { $set: data });
+        res.send({msg:'Actualizado'});
     } catch (error) {
         console.log(error);
     }

@@ -10,6 +10,7 @@ import "./assets/css/form.css"
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import CreateReservation from './components/Reservacion/CreateReservacion';
 import Logout from './components/Perfil/Logout';
+import Update from './components/Reservacion/UpdateReservacion';
 
 
 function App() {
@@ -36,6 +37,9 @@ function App() {
         </div>
         <div>
           <Route exact path = "/Salir" component={Logout}></Route>
+        </div>
+        <div>
+          <Route exact path = "/Actualizar" component={Update}></Route>
         </div>
   </Router>
   );

@@ -17,7 +17,7 @@ export default function CreateReservation(){
     const [telefono,setTelefono] = useState("");
     const [nombre,setNombre] = useState("");
     const [cantidadParticipantes,setCantidad] = useState("");
-    const idReserva = parseInt(APIReservaciones.length);
+    const idReserva = parseInt(APIReservaciones.length)+1;
     useEffect(() => {
         axios.get(`http://localhost:8000/api/Deportes/get`)
             .then((response) => {
@@ -38,7 +38,7 @@ export default function CreateReservation(){
 
     const addReservation = ()=>{
         axios.post(`http://localhost:8000/api/Reservaciones/add`,{
-            idReserva,idUsuario,idDeporte,idHotel,fecha,cantidadParticipantes,telefono,nombre,estado:'Pendiente',precioTotal: parseInt(APIDeportes[idDeporte].precioPersona*cantidadParticipantes)
+            id:idReserva,idUsuario,idDeporte,idHotel,fecha,cantidadParticipantes,telefono,nombre,estado:'Pendiente',precioTotal: parseInt(APIDeportes[idDeporte].precioPersona*cantidadParticipantes),idInstructor:idDeporte
         })
         .then(()=>{
             history.push('/');
@@ -53,7 +53,7 @@ export default function CreateReservation(){
                 <p class="title">Reservacion </p>
                 <p class="message">Registra tu actividad Extrema</p>
                 <label>
-                    <select required name="" id="" onChange={(e)=>setDeporte(parseInt(e.target.value))}>
+                    <select onChange={(e)=>setDeporte(parseInt(e.target.value))}>
                         <option>Seleccione el Deporte</option>
                         {
                             APIDeportes.map((data)=>{
@@ -82,7 +82,7 @@ export default function CreateReservation(){
                     <span>Cantidad Personas</span>
                 </label>
                 <label>
-                <select name="" id="" required onChange={(e)=>setIdHotel(parseInt(e.target.value))}>
+                <select onChange={(e)=>setIdHotel(parseInt(e.target.value))}>
                         <option>Seleccione el Hotel a Reservar</option>
                         {
                             APIHoteles.map((data)=>{

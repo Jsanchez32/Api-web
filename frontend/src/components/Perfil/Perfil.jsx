@@ -1,25 +1,31 @@
 import axios from "axios";
 import React, { useState } from "react";
-import Botones from "./Btn";
+import { Link } from "react-router-dom";
 
 export default function Perfil() {
+
+    const deleteOne = (id)=>{
+        axios.delete(`http://localhost:8000/api/Reservaciones/del/${id}`)
+        .then((getData)=>{
+            setAPIData(getData.data);
+        });
+    }
     const [APIData, setAPIData] = useState([]);
     const rol = localStorage.getItem('rol');
     const id = parseInt(localStorage.getItem('id'))
-    if(rol==='user'){
+    if (rol === 'user') {
         axios.post(`http://localhost:8000/api/reservacion`, { id })
             .then((response) => {
-                console.log(id);
-                console.log(response.data);
                 setAPIData(response.data);
             })
-        }
-    if(rol==='admin'){
-            axios.get(`http://localhost:8000/api/admin`)
-                .then((response)=>{
-                    setAPIData(response.data);
-                })
-        }
+    }
+    if (rol === 'admin') {
+        axios.get(`http://localhost:8000/api/admin`)
+            .then((response) => {
+                setAPIData(response.data);
+            })
+
+    }
     return (
         <div>
             <div className="container">
@@ -41,7 +47,29 @@ export default function Perfil() {
                                     <div className="bio">
                                         <p>Instructor: {data.nombreGuia}</p>
                                     </div>
-                                    <Botones></Botones>
+                                    <div className="bio">
+                                        {rol === 'admin' ? (
+                                            <div>
+                                                <Link to="/deportes">
+                                                    <button onClick={()=>deleteOne(data.id)}>Eliminar</button>
+                                                </Link>
+                                                <Link to="/actualizar">
+                                                    <button onClick={() => {
+                                                        localStorage.setItem('idUsuario', data.idUsuario);
+                                                        localStorage.setItem('idDeporte', data.idDeporte);
+                                                        localStorage.setItem('idHotel', data.idHotel);
+                                                        localStorage.setItem('fecha', data.fecha);
+                                                        localStorage.setItem('cantidadParticipantes', data.cantidadParticipantes);
+                                                        localStorage.setItem('telefono', data.telefono);
+                                                        localStorage.setItem('nombre', data.nombre);
+                                                        localStorage.setItem('estado', data.estado);
+                                                        localStorage.setItem('idReserva', data.id);
+                                                    }}>Actualizar</button>
+                                                </Link>
+                                            </div>
+                                        ) : rol === 'user'}
+
+                                    </div>
                                 </div>
 
                                 <div className="card-footer">
