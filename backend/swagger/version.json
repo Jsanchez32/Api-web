@@ -1,63 +1,546 @@
 {
-    "openapi": "3.0.0",
-      "info": {
-        "title": "Basic API",
-        "version": "1.0.1",
-        "description": "A basic API that has extreme Sports as a collection"
-      },
-    "servers": [
-      {
-        "url": "http://localhost:8000/api",
-        "description": "Localhost Server for testing the API"
-      }
-    ],
-    "paths": {
-      "/Deportes/get": {
-        "get": {
-          "tags": [
-            "Deportes"
-          ],
-          "summary": "Get all Deportes",
-          "description": "Obtiene una lista con todos los Deportes existentes",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "no schema defined"
-                    },
-                    "example": {
-                      "deportes": [
-                          {
-                            "_id": "1ae45as823f",
-                            "nombreDeporte": "Rafting",
-                            "descripcion": "Descenso en balsa",
-                            "precioPersona": 50000,
-                            "dificultad":"Intermedia",
-                            "ubicacion": "San Gil"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic API",
+    "version": "1.0.1",
+    "description": "A basic API that provides information about extreme sports"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api",
+      "description": "Localhost Server for testing the API"
+    }
+  ],
+  "paths": {
+    "/Deportes/get": {
+      "get": {
+        "tags": [
+          "Deportes"
+        ],
+        "summary": "Obtener todos los deportes",
+        "description": "Obtiene una lista con todos los deportes existentes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deportes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "1ae45as823f"
+                          },
+                          "nombreDeporte": {
+                            "type": "string",
+                            "example": "Rafting"
+                          },
+                          "descripcion": {
+                            "type": "string",
+                            "example": "Descenso en balsa"
+                          },
+                          "precioPersona": {
+                            "type": "number",
+                            "example": 50000
+                          },
+                          "dificultad": {
+                            "type": "string",
+                            "example": "Intermedia"
+                          },
+                          "ubicacion": {
+                            "type": "string",
+                            "example": "San Gil"
                           }
-                      ]
+                        },
+                        "required": [
+                          "_id",
+                          "nombreDeporte",
+                          "descripcion",
+                          "precioPersona",
+                          "dificultad",
+                          "ubicacion"
+                        ]
+                      }
+                    }
+                  },
+                  "example": {
+                    "deportes": [
+                      {
+                        "_id": "1ae45as823f",
+                        "nombreDeporte": "Rafting",
+                        "descripcion": "Descenso en balsa",
+                        "precioPersona": 50000,
+                        "dificultad": "Intermedia",
+                        "ubicacion": "San Gil"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Bad Request (could change)"
+                    }
+                  },
+                  "example": {
+                    "error": "Bad Request (could change)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Instructores/get": {
+      "get": {
+        "tags": ["Instructores"],
+        "summary": "Obtener información de un instructor",
+        "description": "Obtiene información de un instructor específico.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "instructor": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "nombre": {
+                          "type": "string",
+                          "example": "Pedro Sánchez"
+                        },
+                        "especialidad": {
+                          "type": "string",
+                          "example": "Rafting"
+                        },
+                        "experiencia": {
+                          "type": "string",
+                          "example": "5 años de experiencia en rafting en ríos de nivel avanzado."
+                        },
+                        "ubicacion": {
+                          "type": "string",
+                          "example": "Bucaramanga, Santander"
+                        }
+                      },
+                      "required": ["id", "nombre", "especialidad", "experiencia", "ubicacion"]
+                    }
+                  },
+                  "example": {
+                    "instructor": {
+                      "id": 1,
+                      "nombre": "Pedro Sánchez",
+                      "especialidad": "Rafting",
+                      "experiencia": "5 años de experiencia en rafting en ríos de nivel avanzado.",
+                      "ubicacion": "Bucaramanga, Santander"
                     }
                   }
                 }
               }
-            },
-            "400": {
-              "description": "NOT OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "no schema defined"
-                    },
-                    "example": {
-                      "error": "Bad Request (could change)"
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Bad Request (could change)"
                     }
+                  },
+                  "example": {
+                    "error": "Bad Request (could change)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Hoteles/get": {
+      "get": {
+        "tags": ["Hoteles"],
+        "summary": "Obtener información de un hotel",
+        "description": "Obtiene información de un hotel específico.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "hotel": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "nombre": {
+                          "type": "string",
+                          "example": "Hotel Santander Paradise"
+                        },
+                        "ubicacion": {
+                          "type": "string",
+                          "example": "San Gil, Santander"
+                        },
+                        "estrellas": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "precioPorNoche": {
+                          "type": "integer",
+                          "example": 250000
+                        },
+                        "img": {
+                          "type": "string",
+                          "example": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/486650370.jpg?k=4701d9fd398f0ec19b8bf9ee7d7d474621c3a0f35ed8e9e88d2838bc62b45f42&o=&hp=1"
+                        }
+                      },
+                      "required": ["id", "nombre", "ubicacion", "estrellas", "precioPorNoche", "img"]
+                    }
+                  },
+                  "example": {
+                    "hotel": {
+                      "id": 1,
+                      "nombre": "Hotel Santander Paradise",
+                      "ubicacion": "San Gil, Santander",
+                      "estrellas": 4,
+                      "precioPorNoche": 250000,
+                      "img": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/486650370.jpg?k=4701d9fd398f0ec19b8bf9ee7d7d474621c3a0f35ed8e9e88d2838bc62b45f42&o=&hp=1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Bad Request (could change)"
+                    }
+                  },
+                  "example": {
+                    "error": "Bad Request (could change)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Usuarios/get": {
+      "get": {
+        "tags": ["Usuarios"],
+        "summary": "Obtener información de un usuario",
+        "description": "Obtiene información de un usuario específico.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "usuario": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "object",
+                          "properties": {
+                            "$oid": {
+                              "type": "string",
+                              "example": "651ebc65c33f9716adbb3010"
+                            }
+                          }
+                        },
+                        "id": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "correo": {
+                          "type": "string",
+                          "example": "sarah.green@gmail.com"
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "sarahgreen"
+                        },
+                        "rol": {
+                          "type": "string",
+                          "example": "user"
+                        },
+                        "password": {
+                          "type": "string",
+                          "example": "sarahpass2021"
+                        }
+                      },
+                      "required": ["id", "correo", "username", "rol", "password"]
+                    }
+                  },
+                  "example": {
+                    "usuario": {
+                      "_id": {
+                        "$oid": "651ebc65c33f9716adbb3010"
+                      },
+                      "id": 4,
+                      "correo": "sarah.green@gmail.com",
+                      "username": "sarahgreen",
+                      "rol": "user",
+                      "password": "sarahpass2021"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Bad Request (could change)"
+                    }
+                  },
+                  "example": {
+                    "error": "Bad Request (could change)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/Reservaciones/get": {
+      "get": {
+        "tags": ["Reservaciones"],
+        "summary": "Obtener todas las reservaciones",
+        "description": "Obtiene una lista con todas las reservaciones existentes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "reservaciones": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Reservacion"
+                      }
+                    }
+                  },
+                  "example": {
+                    "reservaciones": [
+                      {
+                        "idReserva": 1,
+                        "idUsuario": 1,
+                        "idDeporte": 1,
+                        "idInstructor": 1,
+                        "idHotel": 3,
+                        "nombre": "Laura Smith",
+                        "telefono": "123456789",
+                        "fecha": "2023-10-15",
+                        "cantidadParticipantes": 4,
+                        "estado": "Confirmada",
+                        "precioTotal": 900000
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Bad Request (could change)"
+                    }
+                  },
+                  "example": {
+                    "error": "Bad Request (could change)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Reservaciones/add": {
+      "post": {
+        "tags": ["Reservaciones"],
+        "summary": "Crear una nueva reserva",
+        "description": "Crea una nueva reserva para una actividad.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reservacion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Reserva creada exitosamente"
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Bad Request (could change)"
+                    }
+                  },
+                  "example": {
+                    "error": "Bad Request (could change)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Reservaciones/upd/{id}": {
+      "put": {
+        "tags": ["Reservaciones"],
+        "summary": "Actualizar una reserva por su ID",
+        "description": "Actualiza una reserva específica según su ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la reserva a actualizar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reservacion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Reserva actualizada exitosamente"
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Reserva no encontrada"
+                    }
+                  },
+                  "example": {
+                    "error": "Reserva no encontrada"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Reservaciones/del/{id}": {
+      "delete": {
+        "tags": ["Reservaciones"],
+        "summary": "Eliminar una reserva por su ID",
+        "description": "Elimina una reserva específica según su ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la reserva a eliminar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Reserva eliminada exitosamente"
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Reserva no encontrada"
+                    }
+                  },
+                  "example": {
+                    "error": "Reserva no encontrada"
                   }
                 }
               }
@@ -66,4 +549,72 @@
         }
       }
     }
+  },
+  "components": {
+    "schemas": {
+      "Reservacion": {
+        "type": "object",
+        "properties": {
+          "idReserva": {
+            "type": "integer",
+            "example": 1
+          },
+          "idUsuario": {
+            "type": "integer",
+            "example": 1
+          },
+          "idDeporte": {
+            "type": "integer",
+            "example": 1
+          },
+          "idInstructor": {
+            "type": "integer",
+            "example": 1
+          },
+          "idHotel": {
+            "type": "integer",
+            "example": 3
+          },
+          "nombre": {
+            "type": "string",
+            "example": "Laura Smith"
+          },
+          "telefono": {
+            "type": "string",
+            "example": "123456789"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date",
+            "example": "2023-10-15"
+          },
+          "cantidadParticipantes": {
+            "type": "integer",
+            "example": 4
+          },
+          "estado": {
+            "type": "string",
+            "example": "Confirmada"
+          },
+          "precioTotal": {
+            "type": "integer",
+            "example": 900000
+          }
+        },
+        "required": [
+          "idReserva",
+          "idUsuario",
+          "idDeporte",
+          "idInstructor",
+          "idHotel",
+          "nombre",
+          "telefono",
+          "fecha",
+          "cantidadParticipantes",
+          "estado",
+          "precioTotal"
+        ]
+      }
+    }
+  }
   }
